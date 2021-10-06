@@ -1,13 +1,32 @@
+### [🔥 #Hacktoberfest](https://github.com/topics/hacktoberfest)
 # Opensource Telegram Bots
-Collection of Telegram Bot source codes [categorized into languages & frameworks].
+
+This repository contains a collection of [Telegram Bot](https://core.telegram.org/bots/api) source codes categorized into languages & frameworks. Contribute to this project by adding your own bot's source code. See [steps to follow](#steps-to-follow), if you need help.
+
 
 - 😁 Beginner friendly & simple codes are also welcome :)
 - 🤧 Add your own codes.
 
-# HacktoberFest
+<br><br>
+<div align="center">
+  <img src="https://hacktoberfest.digitalocean.com/_nuxt/img/logo-hacktoberfest-full.f42e3b1.svg" alt="hacktoberfest2021 logo" style="height:200px;"></img>
+</div>
+
+# [HacktoberFest 2021](https://hacktoberfest.digitalocean.com/)
+
+Hacktoberfest is a month-long global celebration of open source software run by DigitalOcean in partnership with Intel, AppWrite, and DeepSource, with a strong focus on encouraging contributions to open source projects. During the entire month of October 2021, all you have to do is contribute to any open source projects and open at least 4 pull requests. Yes, any project and any kind of contributions. It can be a be a bug fix, improvement, or even a documentation change! And win a T-Shirt and awesome stickers.
+
+- Hacktoberfest is open to everyone.
+- Four quality pull requests must be submitted to public GitHub and/or GitLab repositories.
+- You can sign up anytime between October 1 and October 31.
+
+_**"Hacktoberfest encourages participation in the open source community, which grows bigger every year. Complete the 2021 challenge and earn a limited edition T-shirt."**_
+
+Visit [HacktoberFest](https://hacktoberfest.digitalocean.com/) | [FAQ](https://hacktoberfest.digitalocean.com/faq)
+
 Use this project to make your contribution to an open source project on GitHub.
 
-##  Steps to follow:
+## Steps to follow:
 - 🍴 Fork the repo.
 
 - ⌨️ Add your contribution to corresponding folders (or new folders).
