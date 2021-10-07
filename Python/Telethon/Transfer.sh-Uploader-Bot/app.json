@@ -1,0 +1,39 @@
+{
+
+  "name": "Transfer.sh Uploader Telegram Bot",
+
+  "description": "Telegram bot to upload files to transfer.sh remotely With Heroku Support",
+
+  "keywords": ["uploader","python"],
+
+  "repository": "https://github.com/cybernobie/Transfer.sh-Uploader-Bot",
+
+  "env": {
+
+    "BOT_TOKEN": {
+
+      "description": "Your bot token, as a string. get it from @BotFather (Telegram).",
+
+      "value": ""
+
+    },
+
+    "API_ID": {
+
+      "description": "Get this value from https://my.telegram.org",
+
+      "value": ""
+
+    },
+
+    "API_HASH": {
+
+      "description": "Get this value from https://my.telegram.org",
+
+      "value": ""
+
+    }
+
+  }
+
+}
