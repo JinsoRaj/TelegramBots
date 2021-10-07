@@ -1,0 +1,42 @@
+{
+    "name": "exe.io-url-shortner-bot",
+    "description": "Make short link by using exe.io API key",
+    "keywords": [
+        "telegram",
+        "exe.io",
+		"url shortner",
+		"python"
+    ],
+    "website": "https://github.com/cybernobie/exe.io-url-shortner-bot",
+    "repository": "https://github.com/cybernobie/exe.io-url-shortner-bot",
+    "env": {
+        "BOT_TOKEN": {
+            "description": "Your bot token, Get this From https://telegram.dog/BotFather",
+            "value": ""
+        },
+        "API_ID": {
+            "description": "Get this value from https://my.telegram.org",
+            "value": ""
+        },
+        "API_HASH": {
+            "description": "Get this value from https://my.telegram.org",
+            "value": ""
+        },
+        "API_KEY": {
+            "description": "Get API key from https://exe.io/member/tools/api",
+            "required": false
+        }
+    },
+    "addons": [],
+    "buildpacks": [
+        {
+            "url": "heroku/python"
+        }
+    ],
+    "formation": {
+        "worker": {
+            "quantity": 1,
+            "size": "free"
+        }
+    }
+}
