@@ -3,8 +3,11 @@
 PHP BIN Checker Bot
 
 Fetch Via: https://bins.su
+
 Web Version : [Click Here](https://binsu-api.vercel.app)
+
 API : [Click Here](https://binsu-api.vercel.app/api/{bin})
+
 Test Bot: [Cyber Bin Checker Bot](https://telegram.me/cyberbincheckbot)
 ## Heroku Deploy
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
