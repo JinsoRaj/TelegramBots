@@ -2,7 +2,7 @@
 MRVISHAL2K2
 Simple Url uploader
 """
-import logging
+import os, asyncio, logging
 logging.basicConfig(level=logging.DEBUG,
                     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
@@ -18,7 +18,6 @@ import pySmartDL
 from pySmartDL import SmartDL  
 
 from pyrogram import Client, filters
-from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from .config import *
 
 Bot = Client(
@@ -50,11 +49,9 @@ Time Left ⏳: {g}
              d=downloaded, e=total, f=speed, g=eta)
       try:
          await message.edit(text=mess_age)
-         await asyncio.sleep(3) 
       except:
           pass
-    # A time for it to breathe
-
+      await asyncio.sleep(3)
   if obj.isSuccessful():
     down_path = str(obj.get_dest()) 
     return down_path
@@ -78,7 +75,9 @@ async def down_(c, m):
   
   await msg.edit("Uploaded") 
   
-    
   
+if __name___ == '__main__'
+  logger.info("Starting Bot")
+  Bot.run()
   
     
