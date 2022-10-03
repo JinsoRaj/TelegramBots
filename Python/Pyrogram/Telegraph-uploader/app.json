@@ -1,0 +1,22 @@
+{
+  "name": "Telegraph Uploader Bot",
+  "description": "A simple bot that upload file to telegra.ph",
+  "repository": "https://github.com/Jigarvarma2005/Telegraph-Uploader",
+  "keywords": ["telegraph", "uploader","telegram bot", "telegram"],
+  "env": {
+    "BOT_TOKEN": {
+      "description": "Your Bot token from @Botfather"
+    },
+    "API_ID": {
+      "description": "Your API_ID from https://my.telegram.org/apps "
+    },
+    "API_HASH": {
+      "description": "Your API_HASH from https://my.telegram.org/apps"
+    }
+   },
+   "buildpacks": [
+    {
+      "url": "heroku/python"
+    }
+  ]
+}
