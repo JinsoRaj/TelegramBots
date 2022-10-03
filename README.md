@@ -1,47 +1,46 @@
-### [🔥 #Hacktoberfest](https://github.com/topics/hacktoberfest)
-# Opensource Telegram Bots
-
-This repository contains a collection of [Telegram Bot](https://core.telegram.org/bots/api) source codes categorized into languages & frameworks. Contribute to this project by adding your own bot's source code. See [steps to follow](#steps-to-follow), if you need help.
-
-
-- 😁 Beginner friendly & simple codes are also welcome :)
-- 🤧 Add your own codes.
-
-<br><br>
+<br>
 <div align="center">
-  <img src="https://hacktoberfest.digitalocean.com/_nuxt/img/logo-hacktoberfest-full.f42e3b1.svg" alt="hacktoberfest2021 logo" style="height:200px;"></img>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://user-images.githubusercontent.com/70066170/193515210-f6929e81-fbf8-4e5c-9de4-904a4a71ba16.png">
+    <img width="300" src="https://user-images.githubusercontent.com/70066170/193515452-ebdf9e40-b074-4cfe-b19d-716d66b7e724.png">
+</picture>
+<br>
+
+### <h3>Open-source Telegram Bots</h3>
+[#Hacktoberfest](https://github.com/topics/hacktoberfest) is for everyone.
+
 </div>
 
-# [HacktoberFest 2021](https://hacktoberfest.digitalocean.com/)
+A collection of [Telegram Bot](https://core.telegram.org/bots/api) source codes categorized into different programming languages and their various Telegram Bot API frameworks.
+Contribute to this repository by adding your own bot's source code.
+See [steps to follow](#how-can-i-contribute), if you need help to [get started](#get-started-with-open-source).
 
-Hacktoberfest is a month-long global celebration of open source software run by DigitalOcean in partnership with Intel, AppWrite, and DeepSource, with a strong focus on encouraging contributions to open source projects. During the entire month of October 2021, all you have to do is contribute to any open source projects and open at least 4 pull requests. Yes, any project and any kind of contributions. It can be a be a bug fix, improvement, or even a documentation change! And win a T-Shirt and awesome stickers.
+Hacktoberfest is a month-long global celebration of open source software with a strong focus on encouraging contributions to open source projects.
+During the entire month of October 2022, all you have to do is contribute to any open source projects and open at least 4 pull requests.
+Yes, any project and any kind of contributions.
+It can be a be a bug fix, improvement, or even a documentation change! And win a T-Shirt or get a tree planted in your name.
 
-- Hacktoberfest is open to everyone.
 - Four quality pull requests must be submitted to public GitHub and/or GitLab repositories.
 - You can sign up anytime between October 1 and October 31.
 
-_**"Hacktoberfest encourages participation in the open source community, which grows bigger every year. Complete the 2021 challenge and earn a limited edition T-shirt."**_
+See official [Hacktoberfest website](https://hacktoberfest.com/) for more information regarding the events.
 
-Visit [HacktoberFest](https://hacktoberfest.digitalocean.com/) | [FAQ](https://hacktoberfest.digitalocean.com/faq)
+#### How Can I Contribute?
+- Fork this repository.
+- Add your code.
+   Make sure to add it under corresponding folder of the programming language you are using.
+   If such a folder does not exist, create a new one!
+   If you're using a language framework ([few examples](https://core.telegram.org/bots/samples)) make a subfolder under the programming language folder.
+- Commit your changes.
+- Push to `main` the branch.
+- Open a pull request, with a proper title about the bot.
 
-Use this project to make your contribution to an open source project on GitHub.
+Consider ⭐️ starring and sharing this repository to others!
 
-## Steps to follow:
-- 🍴 Fork the repo.
+#### Get Started with Open-source
 
-- ⌨️ Add your contribution to corresponding folders (or new folders).
+If you are new to open-source, the following resources can help you to get started with your open-source journey!
 
-- 💬 commit with a good message.
-
-- ⬆️ push to `main` branch.
-
-- ➡️ Create Pull request.
-
-- ⭐️ <strike>Star this repo.</strike>
-
-## Tips:
-[Git Tutorial](https://www.digitalocean.com/community/tutorials/how-to-contribute-to-open-source-getting-started-with-git)
-
-[Git CheatSheet](https://www.digitalocean.com/community/cheatsheets/how-to-use-git-a-reference-guide)
-
-[Creating Pull Requests](https://www.digitalocean.com/community/tutorials/how-to-create-a-pull-request-on-github)
+- [Git Tutorial](https://www.digitalocean.com/community/tutorials/how-to-contribute-to-open-source-getting-started-with-git)
+- [Git CheatSheet](https://www.digitalocean.com/community/cheatsheets/how-to-use-git-a-reference-guide)
+- [Creating Pull Requests](https://www.digitalocean.com/community/tutorials/how-to-create-a-pull-request-on-github)
