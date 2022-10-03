@@ -1,0 +1,12 @@
+{
+  "name": "Echo Bot",
+  "version": "0.0.1",
+  "description": "Simple Echo Bot written with telegraf",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "telegraf": "^4.8.5"
+  }
+}
