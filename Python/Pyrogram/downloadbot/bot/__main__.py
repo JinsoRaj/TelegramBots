@@ -59,6 +59,9 @@ Time Left ⏳: {g}
       return None
     
     
+@Bot.on_message(filters.command("start"))
+async def start_(c, m):
+    await m.reply("Running\n send directlinks to see magic")
     
 @Bot.on_message(filters.private & filters.regex(pattern=".*http.*"))
 async def down_(c, m):
