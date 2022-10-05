@@ -1,6 +1,6 @@
 # Echo bot
 
-Echo bot written in Go using [[https://github.com/PaulSonOfLars/gotgbot|gotgbot]]
+Echo bot written in Go using [gotgbot](https://github.com/PaulSonOfLars/gotgbot)
 
 ## Instructions
 
