@@ -1,0 +1,6 @@
+APScheduler
+Pyrogram
+TgCrypto
+Deta
+bs4
+requests
