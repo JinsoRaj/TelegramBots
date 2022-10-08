@@ -1,25 +1,18 @@
-# Shashi
+- [x] create notes
+- [x] Give an access key
+- [x] give weather
 
-Shashi es un bot que pretende ser un asiste para telegram y hacer tu vida mejor
+## How to use
 
-## Cosas que puede hacer por ti:
-
-- [x] Dar la hora
-- [x] Servir como notas
-- [x] Dar una llave de acceso
-- [x] Dar clima
-
-## Como utilizar
-
-Primero se tiene que colocar tu token de Telegram que se consigue con
-[BotFather](t.me/BotFather) para su bot; en [index.ts](./src/index.ts) dentro de
-la linea 25:
+First you have to place your Telegram token that is obtained with
+[BotFather](t.me/BotFather) for your bot; in [index.ts](./src/index.ts) within
+line 25:
 
 ```javascript
-const Bot = new Telegraf(""); //Ingresa el token de Telegram
+const Bot = new Telegraf(""); //Enter the Telegram token
 ```
 
-Despues solo seguir los pasos siguientes:
+Then just follow the steps below:
 
 ```bash
 npm

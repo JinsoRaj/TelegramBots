@@ -1,4 +1,4 @@
-export const PreguntaHora: string[] = [
+export const AskTime: string[] = [
   '.hora',
   '.HORA',
   'a que hora son?',
@@ -20,7 +20,7 @@ export const PreguntaHora: string[] = [
   'A qué horas son?',
   'A qué horas son',
 ];
-export const PreguntaFecha: string[] = [
+export const AskDate: string[] = [
   '.fecha',
   '.FECHA',
   '.dia',
@@ -71,7 +71,7 @@ export const PreguntaFecha: string[] = [
   'Qué día es?',
   'Qué día es',
 ];
-export const Saludo: string[] = [
+export const Greeting: string[] = [
   'como estas',
   'Como estas',
   'Como estas?',
@@ -84,7 +84,7 @@ export const Saludo: string[] = [
   'Como tas?',
   'Comotas?',
 ];
-export const MsgConfuso: Array<string> = [
+export const ConfusingMsg: Array<string> = [
   'No entendi eso :c',
   'Nope',
   'No hablo muy bien español aun',
@@ -92,13 +92,13 @@ export const MsgConfuso: Array<string> = [
   'Soy tan torpe en el español que no entendi lo que dijiste, perdanme:(',
   'No entendi eso, perdon',
 ];
-export const MsgSaludo: Array<string> = [
+export const GreetingMessage: Array<string> = [
   'Hola',
   'Buenass',
   'Como estas?',
   'Holap :p',
 ];
-export const MsgHora: Array<string> = [
+export const TimeMsg: Array<string> = [
   '¡Hora de empezar la funcion!',
   'Hora de comer... Para mi, tu tambien lo deberias hacer',
   'Vaya... La hora ideal para hacer grandes cosas',
@@ -106,7 +106,7 @@ export const MsgHora: Array<string> = [
   'A esta hora se cumplen los sueños',
   '¡No lo pienses mas!',
 ];
-export const MsgDia: Array<string> = [
+export const DateMsg: Array<string> = [
   'Este dia es lo maximo',
   'Aun queda por hacer de este un grandioso dia',
   'Otro dia, otra moneda',

@@ -1,30 +1,30 @@
-import * as fs from 'fs';
+import fs from 'fs';
 import { Context } from 'vm';
 
 export function loggerMeta(log: string) {
-  let mensaje: string = '=========';
-  const ahora = new Date();
+  let msg: string = '=========';
+  const now = new Date();
   //dia, fecha, mes, año, hora, minutos, segundo
-  const tiempo: string =
-    dia(ahora.getDay()) +
+  const time: string =
+    day(now.getDay()) +
     ' ' +
-    ahora.getDate().toString() +
+    now.getDate().toString() +
     ' ' +
-    mes(ahora.getMonth()) +
+    month(now.getMonth()) +
     ' ' +
-    ahora.getFullYear().toString() +
+    now.getFullYear().toString() +
     ' ' +
-    ahora.getHours().toString() +
+    now.getHours().toString() +
     ' ' +
-    ahora.getMinutes().toString() +
+    now.getMinutes().toString() +
     ' ' +
-    ahora.getSeconds().toString();
-  mensaje = tiempo + '\n' + log + '\n' + mensaje + '\n';
+    now.getSeconds().toString();
+  msg = time + '\n' + log + '\n' + msg + '\n';
 
   if (fs.existsSync('shashi.log')) {
-    fs.appendFileSync('shashi.log', mensaje);
+    fs.appendFileSync('shashi.log', msg);
   } else {
-    fs.writeFileSync('shashi.log', mensaje);
+    fs.writeFileSync('shashi.log', msg);
   }
 }
 
@@ -43,16 +43,16 @@ export function setIdUser(id: number) {
     var iden = id.toString() + '\n';
     const file: string = fs.readFileSync('users_shashi.txt', 'utf-8');
     const fileSplit: String[] = file.split('\n');
-    var existe: boolean = false;
+    var exists: boolean = false;
 
     for (let i = 0; i < fileSplit.length; i++) {
       if (fileSplit[i] == id.toString()) {
-        console.log('Existo');
-        existe = true;
+        console.log('i_exist');
+        exists = true;
       }
     }
 
-    if (existe == false) {
+    if (exists == false) {
       fs.appendFileSync('users_shashi.txt', iden);
     }
   } else {
@@ -62,146 +62,146 @@ export function setIdUser(id: number) {
 }
 
 export function checkIdUser(id: number): boolean {
-  var existe: boolean = false;
+  var exists: boolean = false;
   if (fs.existsSync('users_shashi.txt') == false) {
-    existe = false;
+    exists = false;
   } else {
     const file: string = fs.readFileSync('users_shashi.txt', 'utf-8');
     const fileSplit: String[] = file.split('\n');
     for (let i = 0; i < fileSplit.length; i++) {
       const element = fileSplit[i];
       if (element == id.toString()) {
-        existe = true;
+        exists = true;
       }
     }
   }
-  return existe;
+  return exists;
 }
 
-export function anotar(id: number, titulo: string, contenido: string) {
+export function annotate(id: number, title: string, contents: string) {
   const iden = id.toString() + '\n';
-  const texto: string = iden + titulo + '\n' + contenido + '\n----\n';
-  if (fs.existsSync('notas.txt')) {
-    fs.appendFileSync('notas.txt', texto);
+  const text: string = iden + title + '\n' + contents + '\n----\n';
+  if (fs.existsSync('notes.txt')) {
+    fs.appendFileSync('notes.txt', text);
   } else {
-    fs.writeFileSync('notas.txt', texto);
+    fs.writeFileSync('notes.txt', text);
   }
 }
 
-export function obtenerNota(): {
+export function getNote(): {
   id: number;
-  titulo: string;
-  contenido: string;
+  title: string;
+  contents: string;
 }[] {
   if (fs.existsSync('notas.txt') == false) {
     return [
       {
         id: 0,
-        titulo: '',
-        contenido: '',
+        title: '',
+        contents: '',
       },
     ];
   }
-  const archivo: string = fs.readFileSync('notas.txt', 'utf-8');
-  const notas: string[] = archivo.split('\n----\n');
-  let notasArg = [];
-  for (let i = 0; i < notas.length; i++) {
-    const nota = notas[i];
-    const estructura: string[] = nota.split('\n');
-    const id: string = estructura[0];
-    const titulo: string = estructura[1];
-    let contenido: string = '';
-    for (let i = 0; i < estructura.length; i++) {
-      const element = estructura[i];
+  const file: string = fs.readFileSync('notas.txt', 'utf-8');
+  const notes: string[] = file.split('\n----\n');
+  let notesArg = [];
+  for (let i = 0; i < notes.length; i++) {
+    const note = notes[i];
+    const struct: string[] = note.split('\n');
+    const id: string = struct[0];
+    const title: string = struct[1];
+    let contents: string = '';
+    for (let i = 0; i < struct.length; i++) {
+      const element = struct[i];
       if (i > 1) {
-        contenido = contenido + element + '\n';
+        contents = contents + element + '\n';
       }
     }
-    notasArg.push({
+    notesArg.push({
       id: parseInt(id),
-      titulo: titulo,
-      contenido: contenido,
+      title: title,
+      contents: contents,
     });
   }
-  return notasArg;
+  return notesArg;
 }
 
-export function obtenerHora(): string {
-  const ahora = new Date();
-  let enunciado: string;
-  const hora = ahora.getUTCHours() - 6;
-  if (hora == 1 || hora == 13) {
-    enunciado = 'Son la ';
+export function getTime(): string {
+  const now = new Date();
+  let statement: string;
+  const time = now.getUTCHours() - 6;
+  if (time == 1 || time == 13) {
+    statement = 'Son la ';
   } else {
-    enunciado = 'Son las ';
+    statement = 'Son las ';
   }
 
-  if (hora < 12) {
-    enunciado = enunciado + hora.toString() + ' a.m. ';
+  if (time < 12) {
+    statement = statement + time.toString() + ' a.m. ';
   } else {
-    let horaDoce = hora - 12;
-    enunciado = enunciado + horaDoce + ' p.m. ';
+    let horaDoce = time - 12;
+    statement = statement + horaDoce + ' p.m. ';
   }
 
-  enunciado =
-    enunciado +
-    'con ' +
-    ahora.getMinutes() +
-    ' y ' +
-    ahora.getSeconds() +
-    ' segundos';
+  statement =
+    statement +
+    'with ' +
+    now.getMinutes() +
+    ' and ' +
+    now.getSeconds() +
+    ' seconds';
 
-  return enunciado;
+  return statement;
 }
 
-export function obtenerFecha(): string {
-  const ahora = new Date();
-  let enunciado: string =
+export function getDate(): string {
+  const now = new Date();
+  let statement: string =
     'Hoy es ' +
-    dia(ahora.getDay()) +
+    day(now.getDay()) +
     ' ' +
-    ahora.getDate() +
+    now.getDate() +
     ' de ' +
-    mes(ahora.getMonth()) +
+    month(now.getMonth()) +
     ' del ' +
-    ahora.getFullYear();
+    now.getFullYear();
 
-  return enunciado;
+  return statement;
 }
 
-export function argumentosCmd(
+export function argsCmd(
   ctx: Context,
-  numeroArgs?: number
+  numArgs?: number
 ): Array<string> {
-  var mensaje: any = ctx.message.text;
-  if (numeroArgs) {
-    mensaje = mensaje.split(' ', numeroArgs + 1);
+  var msg: any = ctx.message.text;
+  if (numArgs) {
+    msg = msg.split(' ', numArgs + 1);
   } else {
-    mensaje = mensaje.split(' ');
+    msg = msg.split(' ');
   }
 
-  var argumentos: Array<string> = [];
-  for (let index = 0; index < mensaje.length; index++) {
+  var args: Array<string> = [];
+  for (let index = 0; index < msg.length; index++) {
     if (index != 0) {
-      argumentos.push(mensaje[index]);
+      args.push(msg[index]);
     }
   }
 
-  return argumentos;
+  return args;
 }
 
-export function numeroRandom(menor: number, mayor: number): number {
-  let numero = Math.floor(Math.random() * (mayor + 1 - menor) + menor);
-  return numero;
+export function numberRandom(minor: number, elderly: number): number {
+  let number = Math.floor(Math.random() * (elderly + 1 - minor) + minor);
+  return number;
 }
 
-export function mensajeRandom(mensajes: Array<string>): string {
-  let numero = numeroRandom(1, mensajes.length);
-  return mensajes[numero - 1];
+export function msgRandom(msgs: Array<string>): string {
+  let number = numberRandom(1, msgs.length);
+  return msgs[number - 1];
 }
 
-function dia(numero: number): string {
-  switch (numero) {
+function day(number: number): string {
+  switch (number) {
     case 1:
       return 'dom';
 
@@ -228,8 +228,8 @@ function dia(numero: number): string {
   }
 }
 
-function mes(numero: number): string {
-  switch (numero) {
+function month(number: number): string {
+  switch (number) {
     case 1:
       return 'ene';
 

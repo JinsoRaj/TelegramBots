@@ -1,24 +1,24 @@
-import { Context } from 'vm';
 import {
-  anotar,
-  argumentosCmd,
+  annotate,
+  argsCmd,
   checkIdUser,
   logger,
   loggerMeta,
-  mensajeRandom,
-  obtenerFecha,
-  obtenerHora,
-  obtenerNota,
+  msgRandom,
+  getDate,
+  getTime,
+  getNote,
   setIdUser,
 } from './funcionesBasicas';
 import {
-  PreguntaFecha,
-  PreguntaHora,
-  MsgConfuso,
-  MsgSaludo,
-  MsgHora,
-  MsgDia,
+  AskDate,
+  AskTime,
+  ConfusingMsg,
+  GreetingMessage,
+  TimeMsg,
+  DateMsg,
 } from './constantes';
+import { Context } from 'vm';
 
 const Telegraf: any = require('telegraf').Telegraf;
 const weather: any = require('weather-js');
@@ -44,9 +44,9 @@ Bot.use((ctx: Context, next: any) => {
 });
 
 Bot.start((ctx: Context) => {
-  var argumentos = argumentosCmd(ctx, 1);
+  var argumentos = argsCmd(ctx, 1);
   if (argumentos[0] == 'ClaveParaIniciar') {
-    var mensaje = mensajeRandom(MsgSaludo);
+    var mensaje = msgRandom(GreetingMessage);
     ctx.reply(mensaje);
     logger(mensaje);
     setIdUser(ctx.from.id);
@@ -56,9 +56,9 @@ Bot.start((ctx: Context) => {
   }
 });
 
-Bot.hears(PreguntaHora, (ctx: Context) => {
-  var random = mensajeRandom(MsgHora);
-  var mensaje = obtenerHora();
+Bot.hears(AskTime, (ctx: Context) => {
+  var random = msgRandom(TimeMsg);
+  var mensaje = getTime();
   ctx.reply(mensaje);
   mensaje = mensaje + '\n' + random;
   ctx.reply(random);
@@ -66,8 +66,8 @@ Bot.hears(PreguntaHora, (ctx: Context) => {
 });
 
 Bot.command('hora', (ctx: Context) => {
-  var random = mensajeRandom(MsgHora);
-  var mensaje = obtenerHora();
+  var random = msgRandom(TimeMsg);
+  var mensaje = getTime();
   ctx.reply(mensaje);
   mensaje = mensaje + '\n' + random;
   ctx.reply(random);
@@ -75,16 +75,16 @@ Bot.command('hora', (ctx: Context) => {
 });
 
 Bot.command('fecha', (ctx: Context) => {
-  var random = mensajeRandom(MsgDia);
-  var mensaje = obtenerFecha();
+  var random = msgRandom(DateMsg);
+  var mensaje = getDate();
   ctx.reply(mensaje);
   mensaje = mensaje + '\n' + random;
   ctx.reply(random);
   logger(mensaje);
 });
 
-Bot.hears(PreguntaFecha, (ctx: Context) => {
-  var mensaje = obtenerFecha();
+Bot.hears(AskDate, (ctx: Context) => {
+  var mensaje = getDate();
   ctx.reply(mensaje);
   logger(mensaje);
 });
@@ -96,7 +96,7 @@ Bot.command('depurar', (ctx: Context) => {
 });
 
 Bot.command('nota', (ctx: Context) => {
-  let argumentos: string[] = argumentosCmd(ctx);
+  let argumentos: string[] = argsCmd(ctx);
   let titulo = argumentos[0];
   let cuerpo: string = '';
   for (let i = 0; i < argumentos.length; i++) {
@@ -106,7 +106,7 @@ Bot.command('nota', (ctx: Context) => {
     }
   }
   if (checkIdUser(ctx.from.id)) {
-    anotar(ctx.from.id, titulo, cuerpo);
+    annotate(ctx.from.id, titulo, cuerpo);
     const respuesta: string = 'Tu nota fue agregada exitosamente ;D';
     ctx.reply(respuesta);
     logger(respuesta);
@@ -119,13 +119,13 @@ Bot.command('nota', (ctx: Context) => {
 });
 
 Bot.command('ver', (ctx: Context) => {
-  const notas = obtenerNota();
-  const argumentos: string[] = argumentosCmd(ctx, 1);
+  const notas = getNote();
+  const argumentos: string[] = argsCmd(ctx, 1);
   for (let i = 0; i < notas.length; i++) {
     const element = notas[i];
-    if (element.id == ctx.from.id && element.titulo == argumentos[0]) {
-      ctx.reply(element.titulo + '\n' + element.contenido);
-      logger(element.titulo + '\n' + element.contenido);
+    if (element.id == ctx.from.id && element.title == argumentos[0]) {
+      ctx.reply(element.title + '\n' + element.contents);
+      logger(element.title + '\n' + element.contents);
     }
   }
 });
@@ -158,7 +158,7 @@ Bot.command('clima', (ctx: Context) => {
 });
 
 Bot.on('text', (ctx: Context) => {
-  let mensaje = mensajeRandom(MsgConfuso);
+  let mensaje = msgRandom(ConfusingMsg);
   logger(mensaje);
   ctx.reply(mensaje);
 });
