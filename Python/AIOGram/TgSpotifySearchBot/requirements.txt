@@ -1,4 +1,4 @@
 aiogram
-dotenv
+python-dotenv
 aiohttp
 pydantic
