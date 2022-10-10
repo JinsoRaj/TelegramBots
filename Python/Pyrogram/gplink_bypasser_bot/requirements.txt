@@ -1,0 +1,8 @@
+pyrogram
+flask
+cloudscraper
+bs4
+lxml
+urllib3
+requests
+TgCrypto
