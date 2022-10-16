@@ -1,0 +1,5 @@
+GD ='GoogleDrive'
+MG = 'Mega'
+OD = 'OneDrive'
+UB = 'UptoBox'
+FHD = GD+' 1080p'
