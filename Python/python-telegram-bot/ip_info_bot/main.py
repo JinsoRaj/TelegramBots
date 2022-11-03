@@ -50,7 +50,7 @@ def ip_info(update: Update, context: CallbackContext) -> None:
 def main() -> None:
     """Start the bot."""
     # Create the Updater and pass it your bot's token.
-    updater = Updater("5794421701:AAGyp3XM9i4nV5xMK2ZmWlsCnU4ebu_h4-w")
+    updater = Updater("1234567890:fggcisgdvocsvcdsv")
 
     # Get the dispatcher to register handlers
     dispatcher = updater.dispatcher
