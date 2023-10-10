@@ -1,0 +1,28 @@
+{
+  "$schema": "https://raw.githubusercontent.com/SchemaStore/schemastore/master/src/schemas/json/package.json",
+  "name": "a-gpt-bot",
+  "version": "1.0.0",
+  "description": "A Telegram bot that interacts with the OpenAI API",
+  "main": "src/main.ts",
+  "repository": "https://github.com/Kedap/medio-metro-bot.git",
+  "author": "Kedap <kedap.dev@protonmail.com>",
+  "license": "GPL-v3",
+  "private": true,
+  "scripts": {
+    "build": "tsc",
+    "start": "node ./dist/main.js",
+    "inicia": "tsc && node ./dist/main.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "fs-extra": "^11.1.0",
+    "grammy": "^1.14.1",
+    "openai": "^3.2.1",
+    "sqlite3": "^5.1.4",
+    "typescript": "^4.9.5"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^11.0.1",
+    "@types/node": "^18.11.19"
+  }
+}

@@ -1,0 +1,5 @@
+.env
+usuarios.db
+votos.txt
+node_modules
+dist/
