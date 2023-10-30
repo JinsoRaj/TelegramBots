@@ -45,7 +45,7 @@ def start(bot, message):
 
 @app.on_message(filters.command("help"))
 def help(bot,message):
-    bot.send_message(message.chat.id, 'User Commands\n/accountinfo - Account Information \n\nBot By @RoarCyber')
+    bot.send_message(message.chat.id, 'User Commands\n/accountinfo - Account Information\n/accountstats -  Account Stats \n\nBot By @RoarCyber')
 
 # account info open  
 @app.on_message(filters.command("accountinfo"))
@@ -61,11 +61,21 @@ def accountinfo(bot,message):
         bot.send_message(message.chat.id, f'<b>Showing Account Information:</b>\n\nUsername: {account_info["result"]["login"]}\nPremium Expire: {account_info["result"]["premium_expire"]}\nEmail: {account_info["result"]["email"]}\nTotal Files: {account_info["result"]["files_total"]}\nPremium: {account_info["result"]["premium"]}\nBalance: {account_info["result"]["balance"]}\nStorage Used: {storage_info:.2f} GB\nStorage Left: {account_info["result"]["storage_left"]}\nServer Time: {account_info["server_time"]}')
 
 # account info closed 
+@app.on_message(filters.command("accountstats"))
+def accountstats(bot,message):
+    if message.from_user.id not in approved_users:
+        bot.send_message(message.chat.id, "You are not an approved user.\nContact @RoarCyber to get access.")
+        return
+    else:
+        account_stats = get_account_stats()
+        clear_screen()
+        if "result" in account_stats:
+            for item in account_stats["result"]:
+                continue
+            bot.send_message(message.chat.id, f'<b>Showing Account Stats:</b>\n\nDate: {item["day"]}\nViews: {item["views"]}\nViews (Premium): {item["views_prem"]}\nViews (ADB): {item["views_adb"]}\nSales: {item["sales"]}\nDownloads:{item["downloads"]}\nProfit from Views: {item["profit_views"]}\nProfit from Referrals: {item["profit_refs"]}\nProfit from Site: {item["profit_site"]}\nProfit from Sales: {item["profit_sales"]}\nTotal Profit: {item["profit_total"]}\nRefs: {item["refs"]}')    
+        else:
+            print("No 'result' field in the response.")
 
-
-
-
- 
 
 # Run the bot
 app.run()
