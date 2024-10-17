@@ -11,7 +11,7 @@ from telegraph import upload_file
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
-LIMIT = 5242880*2
+LIMIT = 15728640
 
 jvbot = Client(
     "Telegraph bot",
