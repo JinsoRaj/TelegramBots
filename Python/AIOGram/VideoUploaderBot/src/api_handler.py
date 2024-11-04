@@ -31,3 +31,19 @@ class ApiHandler:
             logger.critical(f"An unexpected error occurred: {e}")
             return False
 
+    async def api_saver(self, user_id, api_key):
+        data_handler = DataHandler()
+
+        if not await self.api_checker(api_key):
+            return False
+
+        user = await data_handler.check_user(user_id=user_id)
+
+        if user:
+            if await data_handler.update_user(user_id=user_id, table_name='users_data', api_key=api_key):
+                return True
+            return False
+        else:
+            if await data_handler.add_user(user_id=user_id, api_key=api_key):
+                return True
+            return False
