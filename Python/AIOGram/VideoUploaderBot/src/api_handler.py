@@ -1,5 +1,5 @@
 import aiohttp
-from src import logger
+from __init__ import logger
 from user_data_handler import DataHandler
 
 

@@ -1,5 +1,5 @@
 import aiosqlite
-from datetime import datetime, date
+from datetime import date
 from __init__ import logger
 import re
 

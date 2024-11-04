@@ -39,6 +39,17 @@ class DolphinProfiles:
 
         return users_to_upload
 
+    async def task_worker(self):
+        """Worker to process tasks in the queue with a maximum concurrency of 3."""
+        while True:
+            user_id = await self.upload_queue.get()
+            api_key = await self.data_handler.get_user_api(user_id)
+
+            async with self.task_semaphore:
+                await run_task_in_container(api_key)
+
+            self.upload_queue.task_done()
+
     async def get_all_profiles(self, dolphin_api):
         profiles = []
         api = DolphinAPI(api_key=dolphin_api)
