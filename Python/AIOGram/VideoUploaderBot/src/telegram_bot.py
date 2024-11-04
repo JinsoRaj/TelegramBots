@@ -137,6 +137,18 @@ async def set_up_a_schedule(message: Message, state: FSMContext) -> None:
     await message.answer(f"Send times in format: HH:MM:SS, HH:MM:SS, ...", reply_markup=ReplyKeyboardRemove())
 
 
+@form_router.message(Form.social_platform_settings, F.text.casefold() == "enable youtube uploader")
+async def enable_bot(message: Message):
+    await dolphin_profiles.start_tasks()
+    await message.answer("Bot is now enabled and background tasks are running.")
+
+
+@form_router.message(Form.social_platform_settings, F.text.casefold() == "disable youtube uploader")
+async def disable_bot(message: Message):
+    await dolphin_profiles.stop_tasks()
+    await message.answer("Bot is now disabled and background tasks have been stopped.")
+
+
 @form_router.message(Form.social_platform_schedule)
 async def process_schedule(message: Message, state: FSMContext) -> None:
     date_time = message.text.strip()
@@ -174,5 +186,6 @@ if __name__ == "__main__":
     logging.basicConfig(level=logging.DEBUG, stream=sys.stdout)
     data_handler = DataHandler()
     api_handler = ApiHandler()
+    dolphin_profiles = DolphinProfiles()
 
     asyncio.run(main())
