@@ -40,7 +40,7 @@ class DolphinProfiles:
                 if users_to_upload:
                     for user_id in users_to_upload:
                         api_key = await self.data_handler.get_user_api(user_id)
-                        profiles_to_upload = await self.get_all_profiles(api_key)
+                        profiles_to_upload = await self.get_all_profiles(api_key[0])
 
                         for profile in profiles_to_upload:
                             await self.upload_queue.put(profile)
@@ -50,8 +50,8 @@ class DolphinProfiles:
             await asyncio.sleep(180)
 
     async def get_profiles_to_upload(self):
-        now_time = await asyncio.to_thread(self.timer.get_current_time_h_m_s())
-        now_date = await asyncio.to_thread(self.timer.get_current_time_y_m_d())
+        now_time = await asyncio.to_thread(self.timer.get_current_time_h_m_s)
+        now_date = await asyncio.to_thread(self.timer.get_current_time_y_m_d)
 
         users_to_upload = await self.data_handler.get_users_to_upload(now_time, now_date)
 
