@@ -1,6 +1,9 @@
 import aiosqlite
 from datetime import date
+import mimetypes
 from __init__ import logger
+from uploading_timer import Timer
+import asyncio
 import re
 
 
@@ -185,12 +188,14 @@ class DataHandler:
                 current_time = now_time
                 today_date = now_date
 
+                logger.debug(f"Executing query with date: {today_date} and time: {current_time}")
+
                 query = '''
                 SELECT DISTINCT dt.user_id
                 FROM daily_upload_times dt
                 LEFT JOIN upload_log ul
                 ON dt.user_id = ul.user_id AND dt.upload_time = ul.upload_time AND ul.date = ?
-                WHERE dt.upload_time = ? AND ul.id IS NULL
+                WHERE dt.upload_time <= ? AND ul.id IS NULL
                 '''
 
                 result = await cursor.execute(query, (today_date, current_time))
@@ -212,7 +217,9 @@ class DataHandler:
             async with aiosqlite.connect(self.database_name) as conn:
                 cursor = await conn.cursor()
 
-                today_date = date.today().isoformat()
+                timer = Timer()
+
+                today_date = await asyncio.to_thread(timer.get_current_time_y_m_d)
 
                 await cursor.execute('''
                 INSERT OR IGNORE INTO upload_log (user_id, upload_time, date)
@@ -245,6 +252,8 @@ class DataHandler:
                 api_key = await result.fetchone()
 
                 logger.info(f"User {api_key} successfully retrieved.")
+
+                return [key for key in api_key]
 
         except aiosqlite.Error as e:
             logger.error(f"Failed to log upload for user {user_id}: {e}")
