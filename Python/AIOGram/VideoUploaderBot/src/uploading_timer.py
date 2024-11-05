@@ -28,7 +28,7 @@ class Timer:
             c = ntplib.NTPClient()
             response = c.request('pool.ntp.org')
             time_object = datetime.fromtimestamp(response.tx_time, timezone.utc)
-            current_time = time_object.strftime("%Y:%m:%d")
+            current_time = time_object.strftime("%Y-%m-%d")
             logger.info("Successfully requested current time from the ntp server.")
             return current_time
         except TimeoutError or ConnectionError:
