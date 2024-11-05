@@ -137,13 +137,13 @@ async def set_up_a_schedule(message: Message, state: FSMContext) -> None:
     await message.answer(f"Send times in format: HH:MM:SS, HH:MM:SS, ...", reply_markup=ReplyKeyboardRemove())
 
 
-@form_router.message(Form.social_platform_settings, F.text.casefold() == "enable youtube uploader")
+@form_router.message(Form.social_platform, F.text.casefold() == "enable youtube uploader")
 async def enable_bot(message: Message):
     await dolphin_profiles.start_tasks()
     await message.answer("Bot is now enabled and background tasks are running.")
 
 
-@form_router.message(Form.social_platform_settings, F.text.casefold() == "disable youtube uploader")
+@form_router.message(Form.social_platform, F.text.casefold() == "disable youtube uploader")
 async def disable_bot(message: Message):
     await dolphin_profiles.stop_tasks()
     await message.answer("Bot is now disabled and background tasks have been stopped.")
@@ -171,11 +171,10 @@ async def process_schedule(message: Message, state: FSMContext) -> None:
         keyboard = ReplyKeyboardMarkup(keyboard=schedule_keyboard(), resize_keyboard=True)
         await message.answer(f"Choose one option.", reply_markup=keyboard)
 
+
 async def main() -> None:
-    bot = Bot(token=TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
-
     dp.include_router(form_router)
-
+    bot = Bot(token=TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
     await data_handler.table_creation()
     await data_handler.daily_upload_times_table_creation()
     await data_handler.upload_log_table_creation()

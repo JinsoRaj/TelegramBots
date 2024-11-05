@@ -1,7 +1,4 @@
 import pyanty as dolphin
-import aiohttp
-import aiosqlite
-import requests
 import asyncio
 from pyanty import DolphinAPI
 from selenium_script import SeleniumScript
@@ -107,7 +104,6 @@ class DolphinProfiles:
         if self.running_tasks:
             logger.info("Stopping background tasks.")
             self.running_tasks = False
-            # Cancel the tasks
             if self.check_task:
                 self.check_task.cancel()
             if self.worker_task:
