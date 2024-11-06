@@ -191,18 +191,20 @@ class DataHandler:
                 logger.debug(f"Executing query with date: {today_date} and time: {current_time}")
 
                 query = '''
-                SELECT DISTINCT dt.user_id
-                FROM daily_upload_times dt
-                LEFT JOIN upload_log ul
-                ON dt.user_id = ul.user_id AND dt.upload_time = ul.upload_time AND ul.date = ?
-                WHERE dt.upload_time <= ? AND ul.id IS NULL
-                '''
+                    SELECT DISTINCT dt.user_id, MAX(dt.upload_time) AS nearest_time
+                    FROM daily_upload_times dt
+                    LEFT JOIN upload_log ul
+                    ON dt.user_id = ul.user_id AND dt.upload_time = ul.upload_time AND ul.date = ?
+                    WHERE dt.upload_time <= ? AND ABS(strftime('%s', ?) - strftime('%s', dt.upload_time)) <= 300 AND ul.id IS NULL
+                    GROUP BY dt.user_id
+                    ORDER BY nearest_time DESC
+                    '''
 
-                result = await cursor.execute(query, (today_date, current_time))
+                result = await cursor.execute(query, (today_date, current_time, current_time))
                 users_to_upload = await result.fetchall()
 
-                logger.info(f"Found {len(users_to_upload)} users scheduled for upload at {current_time}.")
-                return [user[0] for user in users_to_upload]
+                logger.info(f"Found {len(users_to_upload)} users scheduled for upload at or before {current_time}.")
+                return [user for user in users_to_upload]
 
         except aiosqlite.Error as e:
             logger.error(f"Failed to fetch users to upload: {e}")
