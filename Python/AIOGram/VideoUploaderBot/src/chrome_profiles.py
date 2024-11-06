@@ -3,20 +3,24 @@ import asyncio
 from pyanty import DolphinAPI
 from selenium_script import SeleniumScript
 from uploading_timer import Timer
+from api_handler import ApiHandler
 from user_data_handler import DataHandler
 from __init__ import logger
 
 
 class DolphinProfiles:
-    def __init__(self, max_concurrent_uploads=3):
+    def __init__(self, max_concurrent_uploads=2):
         self.port = 9222
-        self.task_semaphore = asyncio.Semaphore(max_concurrent_uploads)
+        self.max_concurrent_uploads = max_concurrent_uploads
+        self.task_semaphore = asyncio.Semaphore(self.max_concurrent_uploads)
         self.upload_queue = asyncio.Queue()
         self.data_handler = DataHandler()
         self.timer = Timer()
+        self.api_handler = ApiHandler()
         self.running_tasks = False
         self.check_task = None
         self.worker_task = None
+        self.worker_tasks = []
 
     async def run_profile(self, profile):
         try:
@@ -35,9 +39,12 @@ class DolphinProfiles:
             try:
                 users_to_upload = await self.get_profiles_to_upload()
                 if users_to_upload:
-                    for user_id in users_to_upload:
+                    for user_id, uploading_time in users_to_upload:
                         api_key = await self.data_handler.get_user_api(user_id)
                         profiles_to_upload = await self.get_all_profiles(api_key[0])
+                        if not await self.data_handler.log_upload(user_id, uploading_time):
+                            logger.error(f"Unable to add user {user_id} upload_log table")
+                            continue
 
                         for profile in profiles_to_upload:
                             await self.upload_queue.put(profile)
@@ -64,7 +71,10 @@ class DolphinProfiles:
 
                     if driver:
                         selenium_script = SeleniumScript(driver)
-                        await selenium_script.upload_video(profile)
+                        result = await selenium_script.upload_video(r"C:\Users\alexp\source\repos\TelegramBots\Python\AIOGram\VideoUploaderBot\videos\test-video.mp4")
+                        if not result:
+                            logger.error(f"Failed to upload video for profile {profile['name']}.")
+                            raise Exception
                         logger.info(f"Video upload for profile {profile['name']} completed.")
                     else:
                         logger.error(f"Failed to start WebDriver for profile {profile['name']}.")
@@ -73,6 +83,7 @@ class DolphinProfiles:
                 logger.error(f"Error during task execution for profile {profile['name']}: {e}")
 
             finally:
+                await self.api_handler.stop_profile(profile['id'])
                 self.upload_queue.task_done()
 
     async def get_all_profiles(self, dolphin_api):
@@ -96,7 +107,10 @@ class DolphinProfiles:
             logger.info("Starting background tasks.")
             self.running_tasks = True
             self.check_task = asyncio.create_task(self.check_and_add_profiles_to_queue())
-            self.worker_task = asyncio.create_task(self.task_worker())
+            self.worker_tasks = [
+                asyncio.create_task(self.task_worker())
+                for _ in range(self.max_concurrent_uploads)
+            ]
         else:
             logger.info("Background tasks are already running.")
 
