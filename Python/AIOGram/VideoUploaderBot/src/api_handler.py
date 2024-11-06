@@ -47,3 +47,20 @@ class ApiHandler:
             if await data_handler.add_user(user_id=user_id, api_key=api_key):
                 return True
             return False
+
+    async def stop_profile(self, profile_id):
+        api_url = f'http://localhost:3001/v1.0/browser_profiles/{profile_id}/stop'
+
+        try:
+            async with aiohttp.ClientSession() as session:
+                async with session.get(api_url) as response:
+                    if response.status == 200:
+                        response_json = await response.json()
+                        logger.info(f'Successfully stopped profile {profile_id}: {response_json}')
+                        return True
+                    else:
+                        logger.info(f'Failed to stop the profile {profile_id}: {response.status}')
+                        return False
+        except aiohttp.ClientConnectorError as e:
+            logger.info(f"Failed to stop profile {profile_id}: {e}")
+
