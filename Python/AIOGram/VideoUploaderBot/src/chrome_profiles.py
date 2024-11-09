@@ -22,6 +22,15 @@ class DolphinProfiles:
         self.worker_tasks = []
 
     async def run_profile(self, profile):
+        """
+        Runs a Dolphin browser profile and returns the associated WebDriver instance.
+
+        Args:
+            profile (dict): A dictionary containing the profile's information (e.g., name, id).
+
+        Returns:
+            WebDriver: The Selenium WebDriver instance if the profile runs successfully, or None if an error occurs.
+        """
         try:
             logger.info(f"Starting profile: {profile['name']}")
             response = await asyncio.to_thread(dolphin.run_profile, profile['id'])
@@ -34,6 +43,16 @@ class DolphinProfiles:
             return None
 
     async def check_and_add_profiles_to_queue(self):
+        """
+        Continuously checks for users whose profiles are scheduled to upload and adds them to the upload queue.
+
+        This method runs as a background task, checking the database periodically to fetch profiles that need to be processed
+        and added to the upload queue. It repeats this process every 3 minutes.
+
+        Raises:
+            Exception: If an error occurs while adding profiles to the queue.
+        """
+
         while self.running_tasks:
             try:
                 users_to_upload = await self.get_profiles_to_upload()
@@ -53,6 +72,13 @@ class DolphinProfiles:
             await asyncio.sleep(180)
 
     async def get_profiles_to_upload(self):
+        """
+        Retrieves users who are scheduled to upload videos based on the current time.
+
+        Returns:
+            list: A list of tuples containing user_id and uploading_time.
+        """
+
         now_time = await asyncio.to_thread(self.timer.get_current_time_h_m_s)
         now_date = await asyncio.to_thread(self.timer.get_current_time_y_m_d)
 
@@ -61,6 +87,15 @@ class DolphinProfiles:
         return users_to_upload
 
     async def task_worker(self):
+        """
+        Worker task that processes profiles from the upload queue and handles video uploads.
+
+        This method gets profiles from the upload queue, starts a profile, uploads a random video, and logs the results.
+
+        Raises:
+            Exception: If an error occurs during the profile upload process.
+        """
+
         while self.running_tasks:
             user_id_profile = await self.upload_queue.get()
             user_id = user_id_profile[0]
@@ -92,6 +127,16 @@ class DolphinProfiles:
                 self.upload_queue.task_done()
 
     async def get_all_profiles(self, dolphin_api):
+        """
+        Retrieves all profiles associated with a given Dolphin API key.
+
+        Args:
+            dolphin_api (str): The Dolphin API key for fetching profiles.
+
+        Returns:
+            list: A list of profiles associated with the provided API key.
+        """
+
         try:
             profiles = []
             api = DolphinAPI(api_key=dolphin_api)
@@ -108,6 +153,15 @@ class DolphinProfiles:
             return []
 
     async def start_tasks(self):
+        """
+        Starts tasks for checking profiles and handling video uploads.
+
+        This method starts two main tasks: checking and adding profiles to the upload queue,
+        and processing the profiles from the queue to upload videos concurrently.
+
+        If the tasks are already running, it logs that the background tasks are already active.
+        """
+
         if not self.running_tasks:
             logger.info("Starting background tasks.")
             self.running_tasks = True
@@ -120,6 +174,14 @@ class DolphinProfiles:
             logger.info("Background tasks are already running.")
 
     async def stop_tasks(self):
+        """
+        Stops tasks and clears the upload queue.
+
+        This method cancels the background tasks, waits for them to finish, and resets the upload queue.
+
+        If no tasks are running, it logs that no background tasks were active.
+        """
+
         if self.running_tasks:
             logger.info("Stopping background tasks.")
             self.running_tasks = False
