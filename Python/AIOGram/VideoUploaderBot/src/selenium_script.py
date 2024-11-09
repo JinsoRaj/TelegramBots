@@ -189,7 +189,7 @@ class SeleniumScript:
         Args:
             element (WebElement): The element to scroll to.
         """
-        
+
         await asyncio.to_thread(self.driver.execute_script, "arguments[0].scrollIntoView();", element)
         await self._break_between_actions()
 

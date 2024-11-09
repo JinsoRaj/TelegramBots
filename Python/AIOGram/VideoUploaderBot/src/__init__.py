@@ -3,7 +3,7 @@ import os
 
 project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 logs_path = os.path.join(project_root, 'logs')
-videos_path = os.path.join(project_root, 'videos_path')
+videos_path = os.path.join(project_root, 'videos')
 text_files = os.path.join(project_root, 'text_files')
 
 
