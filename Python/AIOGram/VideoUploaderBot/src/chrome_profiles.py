@@ -5,7 +5,7 @@ from selenium_script import SeleniumScript
 from uploading_timer import Timer
 from api_handler import ApiHandler
 from user_data_handler import DataHandler
-from __init__ import logger
+from __init__ import logger, videos_path
 
 
 class DolphinProfiles:
@@ -19,7 +19,6 @@ class DolphinProfiles:
         self.api_handler = ApiHandler()
         self.running_tasks = False
         self.check_task = None
-        self.worker_task = None
         self.worker_tasks = []
 
     async def run_profile(self, profile):
@@ -47,7 +46,7 @@ class DolphinProfiles:
                             continue
 
                         for profile in profiles_to_upload:
-                            await self.upload_queue.put(profile)
+                            await self.upload_queue.put([user_id, profile])
                             logger.info(f"Profile {profile['name']} added to the queue.")
             except Exception as e:
                 logger.error(f"Error while checking and adding profiles to queue: {e}")
@@ -63,7 +62,9 @@ class DolphinProfiles:
 
     async def task_worker(self):
         while self.running_tasks:
-            profile = await self.upload_queue.get()
+            user_id_profile = await self.upload_queue.get()
+            user_id = user_id_profile[0]
+            profile = user_id_profile[1]
 
             try:
                 async with self.task_semaphore:
@@ -71,7 +72,11 @@ class DolphinProfiles:
 
                     if driver:
                         selenium_script = SeleniumScript(driver)
-                        result = await selenium_script.upload_video(r"C:\Users\alexp\source\repos\TelegramBots\Python\AIOGram\VideoUploaderBot\videos\test-video.mp4")
+                        random_video = await self.data_handler.pick_random_video(user_id, videos_path)
+                        if not random_video:
+                            logger.error(f"Failed to pick video for profile {profile['name']}.")
+                            raise Exception
+                        result = await selenium_script.upload_video(random_video)
                         if not result:
                             logger.error(f"Failed to upload video for profile {profile['name']}.")
                             raise Exception
@@ -120,10 +125,12 @@ class DolphinProfiles:
             self.running_tasks = False
             if self.check_task:
                 self.check_task.cancel()
-            if self.worker_task:
-                self.worker_task.cancel()
+            if self.worker_tasks:
+                for task in self.worker_tasks:
+                    task.cancel()
 
-            await asyncio.gather(self.check_task, self.worker_task, return_exceptions=True)
+            await asyncio.gather(self.check_task, *self.worker_tasks, return_exceptions=True)
+            self.upload_queue = asyncio.Queue()
             logger.info("Background tasks stopped.")
         else:
             logger.info("Background tasks are not running.")
