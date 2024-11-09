@@ -67,7 +67,7 @@ def back_to_schedule_menu_keyboard():
 async def process_youtube_platform(message: Message, state: FSMContext) -> None:
     user_id = message.from_user.id
 
-    if data_handler.check_user(str(user_id)):
+    if await data_handler.check_user(str(user_id)):
         await state.set_state(Form.social_platform)
         keyboard = ReplyKeyboardMarkup(keyboard=platform_list_keyboard(), resize_keyboard=True)
         await message.answer("Welcome to the Main Menu"
