@@ -65,9 +65,17 @@ def back_to_schedule_menu_keyboard():
 
 @form_router.message(CommandStart())
 async def process_youtube_platform(message: Message, state: FSMContext) -> None:
-    await state.set_state(Form.api_key)
-    await message.answer(f"Hello, {html.bold(message.from_user.full_name)}! Send your DolphinAnty API key.",
-                         reply_markup=ReplyKeyboardRemove())
+    user_id = message.from_user.id
+
+    if data_handler.check_user(str(user_id)):
+        await state.set_state(Form.social_platform)
+        keyboard = ReplyKeyboardMarkup(keyboard=platform_list_keyboard(), resize_keyboard=True)
+        await message.answer("Welcome to the Main Menu"
+                             , reply_markup=keyboard)
+    else:
+        await state.set_state(Form.api_key)
+        await message.answer(f"Hello, {html.bold(message.from_user.full_name)}! Send your DolphinAnty API key.",
+                             reply_markup=ReplyKeyboardRemove())
 
 
 @form_router.message(Form.api_key)
@@ -75,7 +83,7 @@ async def process_api_key(message: Message, state: FSMContext) -> None:
     api_key = message.text.strip()
     user_id = message.from_user.id
 
-    if await api_handler.api_saver(user_id, api_key):
+    if await api_handler.api_saver(str(user_id), api_key):
         await message.answer("API key was added successfully!", reply_markup=ReplyKeyboardRemove())
         await state.update_data(api_key=api_key)
         await state.set_state(Form.social_platform)
@@ -161,7 +169,7 @@ async def process_schedule(message: Message, state: FSMContext) -> None:
     datetime_list = [component.strip() for component in date_time.split(',')]
 
     if schedule == "daily":
-        if not await data_handler.setup_user_schedule(user_id=user_id, daily_upload_times=datetime_list):
+        if not await data_handler.setup_user_schedule(user_id=str(user_id), daily_upload_times=datetime_list):
             result = False
             await message.answer("Oops! The schedule has not valid format. Please provide a new one.",
                                  reply_markup=ReplyKeyboardRemove())
