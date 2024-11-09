@@ -11,6 +11,17 @@ class Timer:
         self.client = ntplib.NTPClient()
 
     def get_current_time_h_m_s(self):
+        """
+        Retrieves the current time in 'HH:MM:SS' format from the NTP server.
+
+        Returns:
+            str: The current time in 'HH:MM:SS' format if successful; otherwise, None.
+
+        Logs:
+            - Success: Logs the retrieved time.
+            - TimeoutError or ConnectionError: Logs an error if unable to reach the server.
+            - Exception: Logs any unexpected errors that may occur.
+        """
         try:
             c = ntplib.NTPClient()
             response = c.request('pool.ntp.org')
@@ -24,6 +35,17 @@ class Timer:
             logger.critical("An unexpected error occurred: %s", e)
 
     def get_current_time_y_m_d(self):
+        """
+        Retrieves the current date in 'YYYY-MM-DD' format from the NTP server.
+
+        Returns:
+            str: The current date in 'YYYY-MM-DD' format if successful; otherwise, None.
+
+        Logs:
+            - Success: Logs the retrieved date.
+            - TimeoutError or ConnectionError: Logs an error if unable to reach the server.
+            - Exception: Logs any unexpected errors that may occur.
+        """
         try:
             c = ntplib.NTPClient()
             response = c.request('pool.ntp.org')
