@@ -22,6 +22,16 @@ class SeleniumScript:
         self.wait = WebDriverWait(driver, 20)
 
     def get_element_location_by_selector(self, selector):
+        """
+        Finds an element by its CSS selector.
+
+        Args:
+            selector (str): The CSS selector of the element.
+
+        Returns:
+            WebElement: The WebElement if found, otherwise False.
+        """
+
         try:
             element = self.wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, selector)))
             logger.info(f"Element with selector: {selector} found")
@@ -31,6 +41,16 @@ class SeleniumScript:
             return False
 
     def get_element_location_by_id(self, element_id):
+        """
+        Finds an element by its ID.
+
+        Args:
+            element_id (str): The ID of the element.
+
+        Returns:
+            WebElement: The WebElement if found, otherwise False.
+        """
+
         try:
             element = self.wait.until(EC.presence_of_element_located((By.ID, element_id)))
             logger.info(f"Element with id: {element_id} found")
@@ -40,6 +60,16 @@ class SeleniumScript:
             return False
 
     def get_element_location_by_class(self, element_class):
+        """
+        Finds an element by its class name.
+
+        Args:
+            element_class (str): The class name of the element.
+
+        Returns:
+            WebElement: The WebElement if found, otherwise False.
+        """
+
         try:
             element = self.wait.until(EC.presence_of_element_located((By.CLASS_NAME, element_class)))
             logger.info(f"Element with class name: {element_class} found")
@@ -49,6 +79,16 @@ class SeleniumScript:
             return False
 
     def get_element_location_by_xpath(self, xpath):
+        """
+        Finds an element by its XPath.
+
+        Args:
+            xpath (str): The XPath of the element.
+
+        Returns:
+            WebElement: The WebElement if found, otherwise False.
+        """
+
         try:
             element = self.wait.until(EC.presence_of_element_located((By.XPATH, xpath)))
             logger.info(f"Element with XPath: {xpath} found")
@@ -58,40 +98,112 @@ class SeleniumScript:
             return False
 
     async def _break_between_actions(self):
+        """
+        Pauses the execution for a random period between 2 and 4 seconds.
+        """
         await asyncio.sleep(random.randint(2, 4))
 
     async def _sendkeys_break(self):
+        """
+        Pauses the execution for a random period between 0.5 and 1 second.
+        """
         await asyncio.sleep(random.uniform(0.5, 1.0))
 
     async def _auto_text_paste(self, text, textbox):
+        """
+        Automatically pastes text into a textbox by typing each character with a delay.
+
+        Args:
+            text (str): The text to be typed into the textbox.
+            textbox (WebElement): The textbox WebElement where the text will be entered.
+        """
+
         for symbol in text:
             await asyncio.to_thread(textbox.send_keys, symbol)
             await self._sendkeys_break()
 
     async def _read_lines_from_file(self, file_path):
+        """
+        Reads lines from a file asynchronously.
+
+        Args:
+            file_path (str): The path to the file.
+
+        Returns:
+            list: A list of lines from the file.
+        """
+
         async with aiofiles.open(file_path, 'r', encoding='utf-8') as f:
             lines = await f.readlines()
             return [line.strip() for line in lines]
 
     async def _choose_random_line(self, file_path):
+        """
+        Chooses a random line from a file asynchronously.
+
+        Args:
+            file_path (str): The path to the file.
+
+        Returns:
+            str: A random line from the file.
+        """
+
         lines = await self._read_lines_from_file(file_path)
         random_line = random.choice(lines)
         return random_line.strip()
 
     async def _get_random_title(self):
+        """
+        Gets a random title from the titles file.
+
+        Returns:
+            str: A random title from the file.
+        """
+
         return await self._choose_random_line(self.TITLE_FILE_PATH)
 
     async def _get_random_description(self):
+        """
+        Gets a random description from the descriptions file.
+
+        Returns:
+            str: A random description from the file.
+        """
+
         return await self._choose_random_line(self.DESCRIPTION_FILE_PATH)
 
     async def _get_random_tags(self):
+        """
+        Gets a random set of tags from the tags file.
+
+        Returns:
+            str: A random set of tags from the file.
+        """
+
         return await self._choose_random_line(self.TAGS_FILE_PATH)
 
     async def _scroll_to_element(self, element):
+        """
+        Scrolls the page to bring the specified element into view.
+
+        Args:
+            element (WebElement): The element to scroll to.
+        """
+        
         await asyncio.to_thread(self.driver.execute_script, "arguments[0].scrollIntoView();", element)
         await self._break_between_actions()
 
     async def upload_video(self, video_path):
+        """
+        Automates the video upload process to YouTube, filling in title, description, tags, etc.
+
+        Args:
+            video_path (str): The path to the video file to upload.
+
+        Returns:
+            bool: True if the video was successfully uploaded, otherwise False.
+        """
+
         await asyncio.to_thread(self.driver.get, 'https://www.youtube.com/upload')
         await self._break_between_actions()
 
@@ -99,7 +211,7 @@ class SeleniumScript:
         if not select_files_button:
             return False
 
-        await asyncio.to_thread(select_files_button.send_keys, video_path)
+        await asyncio.to_thread(select_files_button.send_keys, str(video_path))
         await self._break_between_actions()
 
         title_textbox = await asyncio.to_thread(self.get_element_location_by_xpath,
