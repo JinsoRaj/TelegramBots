@@ -1,0 +1,10 @@
+pyanty>=1.0.0
+selenium>=4.25.0
+aiohttp>=3.10.10
+chardet>=5.2.0
+python-dotenv>=1.0.1
+aiosqlite>=0.20.0
+requests
+aiogram
+aiofiles
+ntplib
