@@ -56,6 +56,20 @@ async def set_liquidation_price(message: Message, state: FSMContext):
     except ValueError:
         await message.answer("Please enter a valid number for the liquidation price.")
 
+@dp.message(F.text == "Save Settings")
+async def save_settings_handler(message: Message, state: FSMContext):
+    # user_id = message.from_user.id
+    liquidation_price = user_liquidation_prices.get(user_id, "Not set")
+    # crypto_range = user_crypto_range.get(user_id, "Not set")
+
+    response_message = (
+        "Your settings were updated.\n"
+        f"Your current tracking liquidation price is: {liquidation_price}\n"
+        f"Your current crypto range: --COMING SOON--"
+    )
+
+    await message.answer(response_message, reply_markup=bk.main_keyboard())
+
 async def main():
     await dp.start_polling(bot)
 
