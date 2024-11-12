@@ -1,7 +1,7 @@
 import os
 import asyncio
 from dotenv import load_dotenv
-from aiogram import Bot, Dispatcher
+from aiogram import Bot, Dispatcher, F
 from aiogram.types import Message, ReplyKeyboardMarkup, KeyboardButton
 from aiogram.filters import CommandStart
 
@@ -33,6 +33,22 @@ async def command_start_handler(message: Message):
     TELEGRAM_CHAT_ID = message.chat.id
 
     await message.answer(f"Hi, {message.from_user.full_name}! I'm a Liquidation Notifier Bot.", reply_markup=main_keyboard())
+
+@dp.message(F.text == "Settings")
+async def settings_handler(message: Message):
+    kb = [
+        [
+            KeyboardButton(text="Save Settings")
+        ],
+        [
+            KeyboardButton(text="Liquidation Price"),
+            KeyboardButton(text="Crypto Range")
+        ],
+    ]
+
+    keyboard = ReplyKeyboardMarkup(keyboard=kb, resize_keyboard=True)
+
+    await message.answer("Settings menu:", reply_markup=keyboard)
 
 async def main():
     await dp.start_polling(bot)
