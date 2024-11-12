@@ -46,6 +46,16 @@ async def ask_liquidation_price(message: Message, state: FSMContext):
     await message.answer("Please enter the minimum liquidation price you want to track:")
     await state.set_state(LiquidationSettings.waiting_for_liquidation_price)
 
+@dp.message(LiquidationSettings.waiting_for_liquidation_price)
+async def set_liquidation_price(message: Message, state: FSMContext):
+    try:
+        liquidation_price = float(message.text) * 1000
+        user_liquidation_prices[message.from_user.id] = liquidation_price
+        await message.answer(f"Your liquidation price has been set to {liquidation_price:.2f}")
+        await state.clear()
+    except ValueError:
+        await message.answer("Please enter a valid number for the liquidation price.")
+
 async def main():
     await dp.start_polling(bot)
 
