@@ -1,9 +1,12 @@
 import os
 import asyncio
+import bot_keyboards as bk
 from dotenv import load_dotenv
 from aiogram import Bot, Dispatcher, F
-from aiogram.types import Message, ReplyKeyboardMarkup, KeyboardButton
+from aiogram.types import Message
 from aiogram.filters import CommandStart
+from aiogram.fsm.state import State, StatesGroup
+from aiogram.fsm.context import FSMContext
 
 load_dotenv()
 
@@ -13,42 +16,35 @@ bot = Bot(token=TELEGRAM_BOT_TOKEN)
 dp = Dispatcher()
 
 TELEGRAM_CHAT_ID = None
+user_id = None
 
-def main_keyboard():
-    kb = [
-        [
-            KeyboardButton(text="Binance Liquidations"),
-            KeyboardButton(text="BYBIT Liquidations")
-        ],
-        [
-            KeyboardButton(text="Settings"),
-            KeyboardButton(text="Stop")
-        ],
-    ]
-    return ReplyKeyboardMarkup(keyboard=kb, resize_keyboard=True)
+user_liquidation_prices = {}
+
+class LiquidationSettings(StatesGroup):
+    waiting_for_liquidation_price = State()
 
 @dp.message(CommandStart())
 async def command_start_handler(message: Message):
     global TELEGRAM_CHAT_ID
     TELEGRAM_CHAT_ID = message.chat.id
 
-    await message.answer(f"Hi, {message.from_user.full_name}! I'm a Liquidation Notifier Bot.", reply_markup=main_keyboard())
+    await message.answer(f"Hi, {message.from_user.full_name}! I'm a Liquidation Notifier Bot.", reply_markup=bk.main_keyboard())
 
 @dp.message(F.text == "Settings")
 async def settings_handler(message: Message):
-    kb = [
-        [
-            KeyboardButton(text="Save Settings")
-        ],
-        [
-            KeyboardButton(text="Liquidation Price"),
-            KeyboardButton(text="Crypto Range")
-        ],
-    ]
+    await message.answer("Settings menu:", reply_markup=bk.settings_keyboard())
 
-    keyboard = ReplyKeyboardMarkup(keyboard=kb, resize_keyboard=True)
+@dp.message(F.text == "Liquidation Price")
+async def ask_liquidation_price(message: Message, state: FSMContext):
+    global user_id
+    user_id = message.chat.id
 
-    await message.answer("Settings menu:", reply_markup=keyboard)
+    if user_id in user_liquidation_prices:
+        await message.answer(f"Your current tracking liquidation price is: {user_liquidation_prices[user_id]}")
+    else:
+        await message.answer("You have not set a liquidation price yet.")
+    await message.answer("Please enter the minimum liquidation price you want to track:")
+    await state.set_state(LiquidationSettings.waiting_for_liquidation_price)
 
 async def main():
     await dp.start_polling(bot)
