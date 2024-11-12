@@ -25,3 +25,23 @@ def settings_keyboard():
     ]
 
     return ReplyKeyboardMarkup(keyboard=kb, resize_keyboard=True)
+
+def binance_liquidations_keyboard_tracking():
+    kb = [
+        [
+            KeyboardButton(text="Stop Tracking"),
+            KeyboardButton(text="Back")
+        ]
+    ]
+
+    return ReplyKeyboardMarkup(keyboard=kb, resize_keyboard=True)
+
+def binance_liquidations_keyboard_not_tracking():
+    kb = [
+        [
+            KeyboardButton(text="Start Tracking"),
+            KeyboardButton(text="Back")
+        ]
+    ]
+
+    return ReplyKeyboardMarkup(keyboard=kb, resize_keyboard=True)

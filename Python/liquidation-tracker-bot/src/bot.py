@@ -18,6 +18,8 @@ dp = Dispatcher()
 TELEGRAM_CHAT_ID = None
 user_id = None
 
+is_binance_connected = False
+
 user_liquidation_prices = {}
 
 class LiquidationSettings(StatesGroup):
@@ -69,6 +71,18 @@ async def save_settings_handler(message: Message, state: FSMContext):
     )
 
     await message.answer(response_message, reply_markup=bk.main_keyboard())
+
+@dp.message(F.text == "Binance Liquidations")
+async def binance_liquidations_handler(message: Message):
+    global is_binance_connected
+    if not is_binance_connected:
+        await message.answer("Binance Liquidations Menu", reply_markup=bk.binance_liquidations_keyboard_not_tracking())
+    else:
+        await message.answer("Binance Liquidations Menu", reply_markup=bk.binance_liquidations_keyboard_tracking())
+
+@dp.message(F.text == "Back")
+async def back_button_handler(message: Message):
+    await message.answer("Returning to the main menu", reply_markup=bk.main_keyboard())
 
 async def main():
     await dp.start_polling(bot)
