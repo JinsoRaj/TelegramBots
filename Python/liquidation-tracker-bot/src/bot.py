@@ -1,6 +1,7 @@
 import os
 import asyncio
 import bot_keyboards as bk
+import methods as m
 from dotenv import load_dotenv
 from aiogram import Bot, Dispatcher, F
 from aiogram.types import Message
@@ -19,6 +20,7 @@ TELEGRAM_CHAT_ID = None
 user_id = None
 
 is_binance_connected = False
+main_loop = None
 
 user_liquidation_prices = {}
 
@@ -84,7 +86,27 @@ async def binance_liquidations_handler(message: Message):
 async def back_button_handler(message: Message):
     await message.answer("Returning to the main menu", reply_markup=bk.main_keyboard())
 
+@dp.message(F.text == "Start Tracking")
+async def start_tracking_handler(message: Message):
+    global is_binance_connected
+    is_binance_connected = True
+
+    await message.answer("Starting Tracking Liquidations on Binance.", reply_markup=bk.binance_liquidations_keyboard_tracking())
+
+    await asyncio.to_thread(m.connect_binance, main_loop, bot, user_liquidation_prices)
+
+@dp.message(F.text == "Stop Tracking")
+async def stop_tracking_handler(message: Message):
+    global is_binance_connected
+    is_binance_connected = False
+
+    m.disconnect_binance()
+
+    await message.answer("Binance Tracking - Stopped.", reply_markup=bk.binance_liquidations_keyboard_not_tracking())
+
 async def main():
+    global main_loop
+    main_loop = asyncio.get_running_loop()
     await dp.start_polling(bot)
 
 
