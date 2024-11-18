@@ -18,7 +18,7 @@ To run this bot, you'll need:
 1. Ensure you have stable connection to the internet.
 2. Connect your Telegram Bot Token to .env file.
 3. Run bot.py file.
-4. Find **@LooseMoneyBot** in Telegram.
+4. Find **Your Bot Name** in Telegram.
 5. Press **/start** button.
 6. Set Your **Liquidation Price** to track from in settings and save them.
 7. Go to the **Binance Liquidations** and press **Start Tracking**.
