@@ -1,0 +1,3 @@
+requests
+pyrogram
+python-dotenv
