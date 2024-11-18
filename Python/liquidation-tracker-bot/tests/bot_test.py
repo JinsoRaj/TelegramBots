@@ -16,8 +16,15 @@ from bot import (
 
 
 class TestBotHandlers(unittest.IsolatedAsyncioTestCase):
+    """
+    Test class for Telegram bot message handlers.
+    """
 
     async def asyncSetUp(self):
+        """
+        Set up mock objects for each test.
+        Creates mock message objects and FSMContext for simulating Telegram interactions.
+        """
         # Create a mock message object with nested attributes
         self.message = AsyncMock(spec=Message)
         self.message.chat = MagicMock()
@@ -37,6 +44,11 @@ class TestBotHandlers(unittest.IsolatedAsyncioTestCase):
 
     @patch("bot.bk.main_keyboard")
     async def test_command_start_handler(self, mock_main_keyboard):
+        """
+        Test the /start command handler.
+
+        Ensures that the bot sends a welcome message with the main keyboard.
+        """
         # Mock keyboard
         mock_main_keyboard.return_value = "Mock Keyboard"
 
@@ -51,6 +63,11 @@ class TestBotHandlers(unittest.IsolatedAsyncioTestCase):
 
     @patch("bot.bk.settings_keyboard")
     async def test_settings_handler(self, mock_settings_keyboard):
+        """
+        Test the 'Settings' message handler.
+
+        Ensures that the bot sends the settings menu with the correct keyboard.
+        """
         # Mock keyboard
         mock_settings_keyboard.return_value = "Mock Settings Keyboard"
 
@@ -63,6 +80,12 @@ class TestBotHandlers(unittest.IsolatedAsyncioTestCase):
         )
 
     async def test_ask_liquidation_price_not_set(self):
+        """
+        Test the 'Liquidation Price' handler when no price is set.
+
+        Ensures the bot informs the user that no liquidation price is set
+        and prompts for a new price.
+        """
         user_liquidation_prices.pop(self.message.chat.id, None)
 
         await ask_liquidation_price(self.message, self.state)
@@ -80,6 +103,11 @@ class TestBotHandlers(unittest.IsolatedAsyncioTestCase):
         )
 
     async def test_set_liquidation_price_valid(self):
+        """
+        Test setting a valid liquidation price.
+
+        Ensures the price is stored and the bot confirms the update.
+        """
         # Mock user input
         self.message.text = "100"
 
@@ -94,6 +122,11 @@ class TestBotHandlers(unittest.IsolatedAsyncioTestCase):
         self.state.clear.assert_awaited()
 
     async def test_set_liquidation_price_invalid(self):
+        """
+        Test setting an invalid liquidation price.
+
+        Ensures the bot asks for a valid number when invalid input is provided.
+        """
         # Mock invalid user input
         self.message.text = "invalid_input"
 
@@ -108,6 +141,11 @@ class TestBotHandlers(unittest.IsolatedAsyncioTestCase):
 
     @patch("bot.bk.binance_liquidations_keyboard_tracking")
     async def test_start_tracking_handler(self, mock_keyboard_tracking):
+        """
+        Test the 'Start Tracking' message handler.
+
+        Ensures the user's ID is added to active trackers and the bot sends a confirmation.
+        """
         # Mock the reply keyboard
         mock_keyboard = MagicMock()
         mock_keyboard_tracking.return_value = mock_keyboard
@@ -127,6 +165,11 @@ class TestBotHandlers(unittest.IsolatedAsyncioTestCase):
 
     @patch("bot.bk.binance_liquidations_keyboard_not_tracking")
     async def test_stop_tracking_handler(self, mock_keyboard_not_tracking):
+        """
+        Test the 'Stop Tracking' message handler.
+
+        Ensures the user's ID is removed from active trackers and the bot sends a confirmation.
+        """
         # Mock the reply keyboard
         mock_keyboard = MagicMock()
         mock_keyboard_not_tracking.return_value = mock_keyboard
@@ -146,6 +189,11 @@ class TestBotHandlers(unittest.IsolatedAsyncioTestCase):
 
     @patch("methods.connect_binance")
     async def test_binance_api_connection(self, mock_connect_binance):
+        """
+        Test the connect_binance function integration.
+
+        Ensures the Binance WebSocket connection is established.
+        """
         # Mock parameters for the connect_binance function
         mock_loop = MagicMock()
         mock_bot = MagicMock()
@@ -156,9 +204,17 @@ class TestBotHandlers(unittest.IsolatedAsyncioTestCase):
         # Assertions
         mock_connect_binance.assert_awaited_once_with(mock_loop, mock_bot, user_liquidation_prices, active_trackers)
 
+
 class TestOnMessageBinance(unittest.IsolatedAsyncioTestCase):
+    """
+    Test class for Binance WebSocket message handling.
+    """
 
     async def asyncSetUp(self):
+        """
+        Set up mock objects for each test.
+        Creates mock WebSocket messages, bot instances, and user-specific settings.
+        """
         # Mock the Bot instance
         self.mock_bot = AsyncMock()
         self.mock_ws = MagicMock()
@@ -172,6 +228,11 @@ class TestOnMessageBinance(unittest.IsolatedAsyncioTestCase):
         self.active_trackers = {12345}
 
     async def test_on_message_binance_alert_sent(self):
+        """
+        Test Binance WebSocket message handling when an alert is triggered.
+
+        Ensures the bot sends an alert if the total loss exceeds the user's liquidation price.
+        """
         # Example WebSocket message
         message = {
             "o": {
@@ -208,6 +269,11 @@ class TestOnMessageBinance(unittest.IsolatedAsyncioTestCase):
         )
 
     async def test_on_message_binance_no_alert(self):
+        """
+        Test Binance WebSocket message handling when no alert is triggered.
+
+        Ensures no alert is sent if the total loss does not exceed the user's liquidation price.
+        """
         # Example WebSocket message with no liquidation exceeding thresholds
         message = {
             "o": {
@@ -232,6 +298,11 @@ class TestOnMessageBinance(unittest.IsolatedAsyncioTestCase):
         self.mock_bot.send_message.assert_not_awaited()
 
     async def test_on_message_binance_empty_message(self):
+        """
+        Test Binance WebSocket message handling with an empty message.
+
+        Ensures the bot handles empty messages gracefully without errors.
+        """
         # Example of an empty WebSocket message
         empty_message = {}
 
@@ -246,6 +317,7 @@ class TestOnMessageBinance(unittest.IsolatedAsyncioTestCase):
 
         # Assertions
         self.mock_bot.send_message.assert_not_awaited()
+
 
 if __name__ == "__main__":
     unittest.main()
