@@ -1,0 +1,7 @@
+asyncio
+dotenv
+aiogram
+json
+ssl
+websocket
+pip
