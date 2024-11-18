@@ -93,6 +93,19 @@ class TestBotHandlers(unittest.IsolatedAsyncioTestCase):
         )
         self.state.clear.assert_awaited()
 
+    async def test_set_liquidation_price_invalid(self):
+        # Mock invalid user input
+        self.message.text = "invalid_input"
+
+        # Call the handler
+        await set_liquidation_price(self.message, self.state)
+
+        # Assertions
+        self.message.answer.assert_awaited_with(
+            "Please enter a valid number for the liquidation price."
+        )
+        self.state.clear.assert_not_awaited()
+
     @patch("bot.bk.binance_liquidations_keyboard_tracking")
     async def test_start_tracking_handler(self, mock_keyboard_tracking):
         # Mock the reply keyboard
@@ -210,6 +223,22 @@ class TestOnMessageBinance(unittest.IsolatedAsyncioTestCase):
         await on_message_binance(
             self.mock_ws,
             json.dumps(message),
+            self.mock_bot,
+            self.user_liquidation_prices,
+            self.active_trackers,
+        )
+
+        # Assertions
+        self.mock_bot.send_message.assert_not_awaited()
+
+    async def test_on_message_binance_empty_message(self):
+        # Example of an empty WebSocket message
+        empty_message = {}
+
+        # Call the handler
+        await on_message_binance(
+            self.mock_ws,
+            json.dumps(empty_message),
             self.mock_bot,
             self.user_liquidation_prices,
             self.active_trackers,
