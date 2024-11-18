@@ -22,6 +22,7 @@ user_id = None
 is_binance_connected = False
 main_loop = None
 
+active_trackers = set()
 user_liquidation_prices = {}
 
 class LiquidationSettings(StatesGroup):
@@ -76,8 +77,8 @@ async def save_settings_handler(message: Message, state: FSMContext):
 
 @dp.message(F.text == "Binance Liquidations")
 async def binance_liquidations_handler(message: Message):
-    global is_binance_connected
-    if not is_binance_connected:
+    user_id = message.chat.id
+    if user_id not in active_trackers:
         await message.answer("Binance Liquidations Menu", reply_markup=bk.binance_liquidations_keyboard_not_tracking())
     else:
         await message.answer("Binance Liquidations Menu", reply_markup=bk.binance_liquidations_keyboard_tracking())
@@ -88,27 +89,36 @@ async def back_button_handler(message: Message):
 
 @dp.message(F.text == "Start Tracking")
 async def start_tracking_handler(message: Message):
-    global is_binance_connected
-    is_binance_connected = True
+    global active_trackers
 
-    await message.answer("Starting Tracking Liquidations on Binance.", reply_markup=bk.binance_liquidations_keyboard_tracking())
+    active_trackers.add(message.chat.id)
+    print(f"New active tracker - {active_trackers}")
 
-    await asyncio.to_thread(m.connect_binance, main_loop, bot, user_liquidation_prices)
+    await message.answer(
+        "Starting Tracking Liquidations on Binance. You will receive notifications.",
+        reply_markup=bk.binance_liquidations_keyboard_tracking()
+    )
+
 
 @dp.message(F.text == "Stop Tracking")
 async def stop_tracking_handler(message: Message):
-    global is_binance_connected
-    is_binance_connected = False
+    global active_trackers
 
-    m.disconnect_binance()
+    active_trackers.discard(message.chat.id)
 
-    await message.answer("Binance Tracking - Stopped.", reply_markup=bk.binance_liquidations_keyboard_not_tracking())
+    print(f"Active tracker {active_trackers} - disconnected.")
+    await message.answer(
+        "Binance Tracking Stopped. You will no longer receive notifications.",
+        reply_markup=bk.binance_liquidations_keyboard_not_tracking()
+    )
 
 async def main():
     global main_loop
     main_loop = asyncio.get_running_loop()
-    await dp.start_polling(bot)
 
+    await m.connect_binance(main_loop, bot, user_liquidation_prices, active_trackers)
+
+    await dp.start_polling(bot)
 
 if __name__ == "__main__":
     asyncio.run(main())
