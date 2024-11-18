@@ -83,6 +83,10 @@ async def binance_liquidations_handler(message: Message):
     else:
         await message.answer("Binance Liquidations Menu", reply_markup=bk.binance_liquidations_keyboard_tracking())
 
+@dp.message(F.text == "BYBIT Liquidations")
+async def binance_liquidations_handler(message: Message):
+    await message.answer("--COMING SOON--", reply_markup=bk.main_keyboard())
+
 @dp.message(F.text == "Back")
 async def back_button_handler(message: Message):
     await message.answer("Returning to the main menu", reply_markup=bk.main_keyboard())
