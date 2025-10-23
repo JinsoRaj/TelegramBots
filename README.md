@@ -1,46 +1,123 @@
 <br>
 <div align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://user-images.githubusercontent.com/70066170/193515210-f6929e81-fbf8-4e5c-9de4-904a4a71ba16.png">
-    <img width="300" src="https://user-images.githubusercontent.com/70066170/193515452-ebdf9e40-b074-4cfe-b19d-716d66b7e724.png">
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://user-images.githubusercontent.com/70066170/193515210-f6929e81-fbf8-4e5c-9de4-904a4a71ba16.png">
+  <img width="300" src="https://user-images.githubusercontent.com/70066170/193515452-ebdf9e40-b074-4cfe-b19d-716d66b7e724.png">
 </picture>
+
 <br>
 
-### <h3>Open-source Telegram Bots</h3>
-[#Hacktoberfest](https://github.com/topics/hacktoberfest) is for everyone.
+# 🎉 Hacktoberfest 2025 – Open Source Telegram Bots
+[![Hacktoberfest 2025](https://img.shields.io/badge/Hacktoberfest-2025-blueviolet?style=for-the-badge&logo=github)](https://hacktoberfest.com/)
+[![Contributions Welcome](https://img.shields.io/badge/Contributions-Welcome-brightgreen?style=for-the-badge)](#how-can-i-contribute)
+[![License](https://img.shields.io/github/license/username/repo?style=for-the-badge)](./LICENSE)
 
+<br>
+<strong>Open-source Telegram Bots Repository</strong><br>
+A collection of [Telegram Bot](https://core.telegram.org/bots/api) source codes organized by programming language and framework.
 </div>
 
-A collection of [Telegram Bot](https://core.telegram.org/bots/api) source codes categorized into different programming languages and their various Telegram Bot API frameworks.
-Contribute to this repository by adding your own bot's source code.
-See [steps to follow](#how-can-i-contribute), if you need help to [get started](#get-started-with-open-source).
+---
 
-Hacktoberfest is a month-long global celebration of open source software with a strong focus on encouraging contributions to open source projects.
-During the entire month of October 2025, all you have to do is contribute to any open source projects and open at least 4 pull requests.
-Yes, any project and any kind of contributions.
-It can be a be a bug fix, improvement, or even a documentation change! And win a T-Shirt or get a tree planted in your name.
+## 💡 About Hacktoberfest 2025
 
-- Four quality pull requests must be submitted to public GitHub and/or GitLab repositories.
-- You can sign up anytime between October 1 and October 31.
+**Hacktoberfest** is an annual global celebration of open source software, powered by **DigitalOcean**, **Appwrite**, and **Docker**.
 
-See official [Hacktoberfest website](https://hacktoberfest.com/) for more information regarding the events.
+From **October 1 to October 31, 2025**, you can participate by contributing to open source projects on **GitHub** or **GitLab**.  
+Make **4 or more quality pull requests (PRs)** and you’ll earn exclusive rewards — either a **limited-edition Hacktoberfest T-shirt** or have a **tree planted** in your name 🌱.
 
-#### How Can I Contribute?
-- Fork this repository.
-- Add your code.
-   Make sure to add it under corresponding folder of the programming language you are using.
-   If such a folder does not exist, create a new one!
-   If you're using a language framework ([few examples](https://core.telegram.org/bots/samples)) make a subfolder under the programming language folder.
-- Commit your changes.
-- Push to `main` the branch.
-- Open a pull request, with a proper title about the bot.
+### ✅ Participation Rules (as per Hacktoberfest 2025)
 
-Consider ⭐️ starring and sharing this repository to others!
+- Register anytime between **October 1–31, 2025** at [hacktoberfest.com](https://hacktoberfest.com/).
+- Submit **4 accepted pull requests** to public repositories labeled with:
+  - `hacktoberfest`, or  
+  - hosted on an **opt-in repository** (this repo is participating ✅).
+- Contributions must be **meaningful** and **follow the project’s guidelines**.
+- Spammy, low-effort, or duplicate PRs will be **marked as invalid** and disqualified.
 
-#### Get Started with Open-source
+> **Note:** PRs that are labeled as `invalid`, `spam`, or do not follow contribution rules will not count toward Hacktoberfest.
 
-If you are new to open-source, the following resources can help you to get started with your open-source journey!
+---
 
-- [Git Tutorial](https://www.digitalocean.com/community/tutorials/how-to-contribute-to-open-source-getting-started-with-git)
-- [Git CheatSheet](https://www.digitalocean.com/community/cheatsheets/how-to-use-git-a-reference-guide)
-- [Creating Pull Requests](https://www.digitalocean.com/community/tutorials/how-to-create-a-pull-request-on-github)
+## 🧠 What Is This Repository?
+
+This repository contains open-source Telegram bot projects written in various programming languages using official and third-party frameworks.
+
+You can contribute by:
+- Adding your **own Telegram bot source code**.
+- Improving existing projects (fix bugs, refactor, or enhance documentation).
+- Adding **new examples** using different Telegram frameworks.
+
+---
+
+## 🚀 How Can I Contribute?
+
+1. **Fork** this repository.
+2. **Add your bot’s code** under the corresponding language folder.
+   - Example:  
+     ```
+     python/my_telegram_bot/
+     javascript/weather_bot/
+     ```
+   - If the folder does not exist, **create it**.
+   - For framework-based projects, create a **subfolder** (e.g., `python/aiogram/`).
+3. **Add a README.md** inside your folder describing:
+   - Bot’s name & purpose
+   - Setup instructions
+   - Dependencies
+4. **Commit** your changes with a clear message.
+5. **Push** your branch and open a **Pull Request (PR)** to `main` with a descriptive title.
+
+Example PR title:
+
+Added Telegram Weather Bot in Python using Aiogram
+
+
+---
+
+## ⚙️ Contribution Guidelines
+
+- Ensure your code runs successfully before submitting.
+- Keep your code **clean and well-documented**.
+- Avoid adding large files, sensitive data, or API keys.
+- Use `.gitignore` where necessary.
+- **One bot per pull request** (makes reviewing easier).
+- Respect the **Code of Conduct**.
+
+> 💬 If you’re a beginner, don’t worry! Small contributions such as improving docs or fixing typos are also valuable.
+
+---
+
+## 🌱 Get Started with Open Source
+
+If you’re new to contributing, here are some helpful guides:
+
+- [How to Contribute to Open Source on GitHub](https://opensource.guide/how-to-contribute/)
+- [DigitalOcean: How to Create a Pull Request](https://www.digitalocean.com/community/tutorials/how-to-create-a-pull-request-on-github)
+- [Git Cheat Sheet](https://education.github.com/git-cheat-sheet-education.pdf)
+- [Understanding Open Source Licenses](https://choosealicense.com/)
+
+---
+
+## 📜 Code of Conduct
+
+By participating in this project, you agree to uphold our [Code of Conduct](./CODE_OF_CONDUCT.md).  
+We are committed to maintaining a welcoming and inclusive environment for everyone.
+
+---
+
+## ⭐ Support & Share
+
+If you find this repository helpful:
+- Star ⭐ it on GitHub.
+- Share it with your friends.
+- Encourage more developers to contribute and learn open source!
+
+---
+
+<div align="center">
+  <h3>Let’s make open-source better together 💪</h3>
+  <p>Happy Hacking & Happy Hacktoberfest 2025! 🎃</p>
+  <a href="https://hacktoberfest.com/"><img width="200" src="https://hacktoberfest.digitalocean.com/_next/static/media/logo.9e0a7c07.svg"></a>
+</div>
