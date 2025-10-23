@@ -18,7 +18,7 @@ See [steps to follow](#how-can-i-contribute), if you need help to [get started](
 Hacktoberfest is a month-long global celebration of open source software with a strong focus on encouraging contributions to open source projects.
 During the entire month of October 2024, all you have to do is contribute to any open source projects and open at least 4 pull requests.
 Yes, any project and any kind of contributions.
-It can be a be a bug fix, improvement, or even a documentation change! And win a T-Shirt or get a tree planted in your name.
+It can be a bug fix, improvement, or even a documentation change! And win a T-Shirt or get a tree planted in your name.
 
 - Four quality pull requests must be submitted to public GitHub and/or GitLab repositories.
 - You can sign up anytime between October 1 and October 31.
