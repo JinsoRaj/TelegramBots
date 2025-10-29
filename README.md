@@ -116,14 +116,14 @@ If you find this repository helpful:
 
 ---
 
+## Contributors Hall of Fame
+
+![Contributors Hall of Fame](https://github.aryansinghnegi.dev/?repo=JinsoRaj/TelegramBots)
+
+---
+
 <div align="center">
   <h3>Let’s make open-source better together 💪</h3>
   <p>Happy Hacking & Happy Hacktoberfest 2025! 🎃</p>
   <a href="https://hacktoberfest.com/"><img width="200" src="https://hacktoberfest.com/_next/static/media/logo-hacktoberfest-12--nav.0ac01b46.svg"></a>
 </div>
-
----
-
-## Contributors Hall of Fame
-
-![Contributors Hall of Fame](https://github.aryansinghnegi.dev/?repo=JinsoRaj/TelegramBots)
