@@ -121,7 +121,9 @@ If you find this repository helpful:
   <p>Happy Hacking & Happy Hacktoberfest 2025! 🎃</p>
   <a href="https://hacktoberfest.com/"><img width="200" src="https://hacktoberfest.com/_next/static/media/logo-hacktoberfest-12--nav.0ac01b46.svg"></a>
 </div>
+
 ---
+
 ## Contributors Hall of Fame
 
 ![Contributors Hall of Fame](https://github.aryansinghnegi.dev/?repo=JinsoRaj/TelegramBots)
