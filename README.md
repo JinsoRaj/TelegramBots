@@ -119,5 +119,5 @@ If you find this repository helpful:
 <div align="center">
   <h3>Let’s make open-source better together 💪</h3>
   <p>Happy Hacking & Happy Hacktoberfest 2025! 🎃</p>
-  <a href="https://hacktoberfest.com/"><img width="200" src="https://hacktoberfest.digitalocean.com/_next/static/media/logo.9e0a7c07.svg"></a>
+  <a href="https://hacktoberfest.com/"><img width="200" src="https://hacktoberfest.com/_next/static/media/logo-hacktoberfest-12--nav.0ac01b46.svg"></a>
 </div>
