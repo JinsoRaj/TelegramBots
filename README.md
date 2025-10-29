@@ -118,7 +118,7 @@ If you find this repository helpful:
 
 ## Contributors Hall of Fame
 
-![Contributors Hall of Fame](https://github.aryansinghnegi.dev/?repo=JinsoRaj/TelegramBots)
+![Contributors Hall of Fame](https://contrib.rocks/image?repo=JinsoRaj/TelegramBots)
 
 ---
 
