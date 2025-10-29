@@ -11,11 +11,11 @@
 # 🎉 Hacktoberfest 2025 – Open Source Telegram Bots
 [![Hacktoberfest 2025](https://img.shields.io/badge/Hacktoberfest-2025-blueviolet?style=for-the-badge&logo=github)](https://hacktoberfest.com/)
 [![Contributions Welcome](https://img.shields.io/badge/Contributions-Welcome-brightgreen?style=for-the-badge)](#how-can-i-contribute)
-[![License](https://img.shields.io/github/license/username/repo?style=for-the-badge)](./LICENSE)
+[![License](https://img.shields.io/github/license/JinsoRaj/TelegramBots?style=for-the-badge)](./LICENSE)
 
 <br>
 <strong>Open-source Telegram Bots Repository</strong><br>
-A collection of [Telegram Bot](https://core.telegram.org/bots/api) source codes organized by programming language and framework.
+A collection of <a href="https://core.telegram.org/bots/api">Telegram Bot</a> source codes organized by programming language and framework.
 </div>
 
 ---
