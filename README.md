@@ -116,6 +116,12 @@ If you find this repository helpful:
 
 ---
 
+## Contributors Hall of Fame
+
+![Contributors Hall of Fame](https://contrib.rocks/image?repo=JinsoRaj/TelegramBots)
+
+---
+
 <div align="center">
   <h3>Let’s make open-source better together 💪</h3>
   <p>Happy Hacking & Happy Hacktoberfest 2025! 🎃</p>
